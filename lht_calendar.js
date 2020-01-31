@@ -30,7 +30,7 @@
 	
 */
 
-var thisDay = new Date("August 24, 2018");
+var thisDay = new Date();
 
 document.getElementById("calendar").innerHTML = createCalendar(thisDay);
 
@@ -132,7 +132,7 @@ function calWeekdayRow(){
    rowHTML += "</tr>";
    return rowHTML;
 }
-
+// creates the actual day blocks
 function calDays(calDate){
    // determine the starting day
    var day = new Date(calDate.getFullYear(), calDate.getMonth(), 1)
@@ -145,16 +145,25 @@ function calDays(calDate){
 
    // write cells for each day of the month
    var totalDays = daysInMonth(calDate);
-   for(var i = 1; i < totalDays; i++){
+
+   // create a varible that stores today date
+   var highlightedDay = calDate.getDate();
+
+   for(var i = 1; i <= totalDays; i++){
       day.setDate(i);
       firstDay = day.getDay();
       if(firstDay === 0){
          htmlCode += "<tr>";
       }
-      htmlCode += "<td class='calendar_dates'>" + i + "</td>";
+      if(i === highlightedDay){
+         htmlCode += "<td class='calendar_dates' id='calendar_today'>" + i + dayEvent[i] + "</td>";
+      }else{
+         htmlCode += "<td class='calendar_dates'>" + i + dayEvent[i] + "</td>";
+      }
       if(firstDay === 6){
          htmlCode += "</tr>";
       }
    }
    return htmlCode;
 }
+
